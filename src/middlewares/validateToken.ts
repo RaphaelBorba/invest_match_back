@@ -12,16 +12,27 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
     
     try {
 
-        const { userId } = jwt.verify(token, process.env.SECRET_JWT) as JWTPayload;
+        const { userId, type } = jwt.verify(token, process.env.SECRET_JWT) as JWTPayload;
+        let user: any
+
+        if(type === 'company'){
+            user = await prisma.companies.findFirst({
+                where: {
+                    id: userId,
+                },
+            });
+        }else if(type === 'invest'){
+            user = await prisma.investors.findFirst({
+                where: {
+                    id: userId,
+                },
+            });
+        }
         
-        const user = await prisma.companies.findFirst({
-            where: {
-                id: userId,
-            },
-        });
         if (!user) return res.sendStatus(404);
 
         res.locals.userId = userId
+        res.locals.type = type
         
         return next();
     } catch (err) {
@@ -30,5 +41,6 @@ export async function authenticateToken(req: Request, res: Response, next: NextF
 }
 
 type JWTPayload = {
-    userId: number;
+    userId: number,
+    type: string
 };
