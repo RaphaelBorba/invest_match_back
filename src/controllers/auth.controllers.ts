@@ -25,7 +25,9 @@ export async function signUp(req:Request, res:Response){
 
         if( await authServices.checkEmail(body.email) ) return res.status(409).send({message: 'Email already used!'})
 
-        await authRepositories.postSignUpDB(body)
+        const hashPassword = authServices.createHashPassword(body.password)
+
+        await authRepositories.postSignUpDB({...body, password: hashPassword})
 
         res.sendStatus(200)
 
