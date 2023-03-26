@@ -1,11 +1,6 @@
 import { SignUpType } from "../protocols";
 import prisma from "../data/config";
 
-function postSignInDB(body) {
-
-
-}
-
 function postSignUpDB(body: SignUpType) {
 
     if (body.type === 'invest') {
@@ -47,7 +42,6 @@ function getInvetorEmail(email: string) {
 }
 const authRepositories = {
 
-    postSignInDB,
     postSignUpDB,
     getCompanyEmail,
     getInvetorEmail
