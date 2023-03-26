@@ -1,11 +1,12 @@
-import prisma from "../../prisma/config";
+import { SignUpType } from "../protocols";
+import prisma from "../data/config";
 
 function postSignInDB(body) {
 
 
 }
 
-function postSignUpDB(body) {
+function postSignUpDB(body: SignUpType) {
 
     if (body.type === 'invest') {
         return prisma.investors.create({
@@ -16,7 +17,7 @@ function postSignUpDB(body) {
                 password: body.password
             }
         })
-    }else{
+    } else {
         return prisma.companies.create({
             data: {
                 email: body.email,
@@ -28,10 +29,28 @@ function postSignUpDB(body) {
     }
 }
 
+function getCompanyEmail(email: string) {
+
+    return prisma.companies.findFirst({
+        where:{
+            email
+        }
+    })
+}
+function getInvetorEmail(email: string) {
+
+    return prisma.investors.findFirst({
+        where:{
+            email
+        }
+    })
+}
 const authRepositories = {
 
     postSignInDB,
-    postSignUpDB
+    postSignUpDB,
+    getCompanyEmail,
+    getInvetorEmail
 }
 
 export default authRepositories

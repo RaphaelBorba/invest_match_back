@@ -1,9 +1,11 @@
 CREATE TABLE companies (
 	"id" serial NOT NULL,
-	"name" TEXT NOT NULL,
-	"email" TEXT NOT NULL,
+	"name" TEXT NOT NULL UNIQUE,
+	"email" TEXT NOT NULL UNIQUE,
 	"password" TEXT NOT NULL,
 	"image_url" TEXT NOT NULL,
+	"create_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  	"update_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "companies_pk" PRIMARY KEY ("id")
 );
 
@@ -12,9 +14,11 @@ CREATE TABLE companies (
 CREATE TABLE investors (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
-	"email" TEXT NOT NULL,
+	"email" TEXT NOT NULL UNIQUE,
 	"password" TEXT NOT NULL,
 	"image_url" TEXT NOT NULL,
+	"create_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  	"update_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "investors_pk" PRIMARY KEY ("id")
 );
 
@@ -28,6 +32,8 @@ CREATE TABLE projects (
 	"amount" FLOAT NOT NULL,
 	"type_id" integer NOT NULL,
 	"company_id" integer NOT NULL,
+	"create_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  	"update_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "projects_pk" PRIMARY KEY ("id")
 );
 
@@ -36,6 +42,8 @@ CREATE TABLE projects (
 CREATE TABLE type_projects (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
+	"create_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  	"update_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "type_projects_pk" PRIMARY KEY ("id")
 );
 
@@ -46,6 +54,8 @@ CREATE TABLE investments (
 	"investor_id" integer NOT NULL,
 	"project_id" integer NOT NULL,
 	"amount" FLOAT NOT NULL,
+	"create_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  	"update_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	CONSTRAINT "investments_pk" PRIMARY KEY ("id")
 );
 

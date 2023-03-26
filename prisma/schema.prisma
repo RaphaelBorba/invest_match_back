@@ -9,10 +9,12 @@ datasource db {
 
 model companies {
   id        Int        @id(map: "companies_pk") @default(autoincrement())
-  name      String
-  email     String
+  name      String     @unique
+  email     String     @unique
   password  String
   image_url String
+  create_at DateTime?  @default(now()) @db.Timestamp(6)
+  update_at DateTime?  @default(now()) @db.Timestamp(6)
   projects  projects[]
 }
 
@@ -21,6 +23,8 @@ model investments {
   investor_id Int
   project_id  Int
   amount      Float
+  create_at   DateTime? @default(now()) @db.Timestamp(6)
+  update_at   DateTime? @default(now()) @db.Timestamp(6)
   investors   investors @relation(fields: [investor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "investments_fk0")
   projects    projects  @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "investments_fk1")
 }
@@ -28,9 +32,11 @@ model investments {
 model investors {
   id          Int           @id(map: "investors_pk") @default(autoincrement())
   name        String
-  email       String
+  email       String        @unique
   password    String
   image_url   String
+  create_at   DateTime?     @default(now()) @db.Timestamp(6)
+  update_at   DateTime?     @default(now()) @db.Timestamp(6)
   investments investments[]
 }
 
@@ -42,13 +48,17 @@ model projects {
   amount        Float
   type_id       Int
   company_id    Int
+  create_at     DateTime?     @default(now()) @db.Timestamp(6)
+  update_at     DateTime?     @default(now()) @db.Timestamp(6)
   investments   investments[]
   type_projects type_projects @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "projects_fk0")
   companies     companies     @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "projects_fk1")
 }
 
 model type_projects {
-  id       Int        @id(map: "type_projects_pk") @default(autoincrement())
-  name     String
-  projects projects[]
+  id        Int        @id(map: "type_projects_pk") @default(autoincrement())
+  name      String
+  create_at DateTime?  @default(now()) @db.Timestamp(6)
+  update_at DateTime?  @default(now()) @db.Timestamp(6)
+  projects  projects[]
 }
