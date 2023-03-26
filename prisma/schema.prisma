@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,4 +5,50 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model companies {
+  id        Int        @id(map: "companies_pk") @default(autoincrement())
+  name      String
+  email     String
+  password  String
+  image_url String
+  projects  projects[]
+}
+
+model investments {
+  id          Int       @id(map: "investments_pk") @default(autoincrement())
+  investor_id Int
+  project_id  Int
+  amount      Float
+  investors   investors @relation(fields: [investor_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "investments_fk0")
+  projects    projects  @relation(fields: [project_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "investments_fk1")
+}
+
+model investors {
+  id          Int           @id(map: "investors_pk") @default(autoincrement())
+  name        String
+  email       String
+  password    String
+  image_url   String
+  investments investments[]
+}
+
+model projects {
+  id            Int           @id(map: "projects_pk") @default(autoincrement())
+  name          String
+  description   String
+  image_url     String
+  amount        Float
+  type_id       Int
+  company_id    Int
+  investments   investments[]
+  type_projects type_projects @relation(fields: [type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "projects_fk0")
+  companies     companies     @relation(fields: [company_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "projects_fk1")
+}
+
+model type_projects {
+  id       Int        @id(map: "type_projects_pk") @default(autoincrement())
+  name     String
+  projects projects[]
 }
