@@ -9,8 +9,8 @@ const signUpModel = Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
     name: Joi.string().required(),
-    imageUrl: Joi.string().uri().required(),
-    type: Joi.string().required()
+    image_url: Joi.string().uri().required(),
+    type: Joi.string().valid('invest','company').required()
 })
 
 const authModels = {
