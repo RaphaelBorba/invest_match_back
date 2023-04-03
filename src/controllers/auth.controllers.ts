@@ -18,7 +18,7 @@ export async function signIn(req: Request, res: Response) {
 
         if(!authServices.validateHashPassword(body.password, user.userData.password)) return res.status(400).send({ message: 'Email or Password wrong!' })
 
-        const token = jwt.sign({type: user.type, userId: user.userData.id}, process.env.SECRET_JWT)
+        const token = jwt.sign({type: user.type, userId: user.userData.id}, process.env.SECRET_JWT,{expiresIn:'2h'})
 
         res.status(200).send({token})
 
