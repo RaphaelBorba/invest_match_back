@@ -32,7 +32,7 @@ function getCompanyEmail(email: string) {
         }
     })
 }
-function getInvetorEmail(email: string) {
+function getInvestorEmail(email: string) {
 
     return prisma.investors.findFirst({
         where:{
@@ -40,11 +40,13 @@ function getInvetorEmail(email: string) {
         }
     })
 }
+
 const authRepositories = {
 
     postSignUpDB,
     getCompanyEmail,
-    getInvetorEmail
+    getInvestorEmail,
+    
 }
 
 export default authRepositories

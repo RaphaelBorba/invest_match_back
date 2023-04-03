@@ -8,7 +8,7 @@ async function checkEmail(email: string) {
 
     if (checkCompany) return { type: 'company', userData:checkCompany }
 
-    const checkInvestor = await authRepositories.getInvetorEmail(email)
+    const checkInvestor = await authRepositories.getInvestorEmail(email)
     
     if (checkInvestor) return { type: 'invest', userData: checkInvestor }
 
